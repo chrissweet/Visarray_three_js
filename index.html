@@ -71,12 +71,16 @@
 
     var camera, cameraTarget, scene, renderer;
 
+    var group;
+
     var radius = 85.0;
 
     init();
     animate();
 
     function init() {
+        group = new THREE.Group();
+        group.name = "objecttoorient";
 
         container = document.createElement('div');
         document.body.appendChild(container);
@@ -133,10 +137,11 @@
             mesh.receiveShadow = true;
             mesh.rotateOnAxis
 
-            scene.add(mesh);
+            group.add(mesh);
 
         });
 
+        scene.add( group );
 
         // Lights
 
@@ -168,12 +173,16 @@
         container.appendChild(stats.domElement);
 
         //
+        var object2o = scene.getObjectByName( "objecttoorient" );
+
         // setup controls
         controls = new THREE.TrackballControls(camera, renderer.domElement);
         controls.rotateSpeed = 1.0;
         controls.zoomSpeed = 2.2;
         controls.panSpeed = 1;
         controls.dynamicDampingFactor = 0.1;
+        controls.noPan = true;
+        controls.noZoom = true;
 
         window.addEventListener('resize', onWindowResize, false);
 
